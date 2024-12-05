@@ -61,6 +61,8 @@ async def process_keywords(message: types.Message, state: FSMContext):
     with open('vacancies_hh.json', 'r') as file:
         data = json.load(file)
 
+    await message.answer(f'Найдено вакансий: {len(data)}.')
+
     for item in data:
         await send_vacancy_card(message, item)
         await state.finish()
@@ -81,6 +83,8 @@ async def process_keywords(message: types.Message, state: FSMContext):
 
     with open('vacancies_sj.json', 'r') as file:
         data = json.load(file)
+
+    await message.answer(f'Найдено вакансий: {len(data)}.')
 
     for item in data:
         await send_vacancy_card(message, item)
@@ -104,12 +108,16 @@ async def process_keywords_both(message: types.Message, state: FSMContext):
 
     with open('vacancies_hh.json', 'r') as file:
         data_hh = json.load(file)
+
+
+    with open('vacancies_sj.json', 'r') as file:
+        data_sj = json.load(file)
+
+    await message.answer(f'Найдено вакансий: {len(data_hh) + len(data_sj)}.')
+
     for item in data_hh:
         await send_vacancy_card(message, item)
 
-    # Вывод результатов с SuperJob
-    with open('vacancies_sj.json', 'r') as file:
-        data_sj = json.load(file)
     for item in data_sj:
         await send_vacancy_card(message, item)
 
